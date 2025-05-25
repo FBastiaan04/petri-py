@@ -201,9 +201,15 @@ while running:
                 case 'a' if selected:
                     if arcStart and type(arcStart) != type(selected):
                         if type(selected) == Transition:
-                            selected.pre.append(arcStart)
+                            if arcStart in selected.pre:
+                                selected.pre.remove(arcStart)
+                            else:
+                                selected.pre.append(arcStart)
                         else:
-                            arcStart.post.append(selected)
+                            if selected in arcStart.post:
+                                arcStart.post.remove(selected)
+                            else:
+                                arcStart.post.append(selected)
                         arcStart = None
                     else:
                         arcStart = selected
